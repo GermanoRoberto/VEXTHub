@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
@@ -15,14 +15,18 @@ export default function LoginPage() {
   const supabase = createClient()
   const [companyName, setCompanyName] = useState('')
 
-  useState(() => {
+  useEffect(() => {
+    let isMounted = true
     fetch('/api/config')
       .then(res => res.json())
       .then(data => {
-        if (data.company_name) setCompanyName(data.company_name)
+        if (isMounted && data.company_name) setCompanyName(data.company_name)
       })
       .catch(() => {})
-  })
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()

@@ -330,8 +330,9 @@ def tick_machine(machine: dict, state: dict) -> None:
         })
 
 
-def update_simulation() -> dict:
-    state = load_state()
+def update_simulation(state: dict | None = None) -> dict:
+    if state is None:
+        state = load_state()
     state.setdefault("events", [])
     state.setdefault("agent_commands", [])
     
@@ -384,7 +385,7 @@ def update_simulation() -> dict:
             "severity": "CRITICAL",
             "type": "Cortex Forensics: Novo endpoint registrado com software de risco (AnyDesk)",
         })
-        print("\n[+] MÁQUINA FÍSICA DO USUÁRIO (PE0D7QQS) INJETADA NO SIMULADOR!\n")
+        print("\n[+] MÁQUINA FÍSICA DO USUÁRIO (PE0D7QQS) INJETADA NO SIMULADOR!\n", flush=True)
 
     for machine in state.get("machines", []):
         tick_machine(machine, state)
@@ -410,21 +411,44 @@ def main() -> None:
     if args.reset:
         state = generate_initial_state(args.units, args.machines_per_unit)
         STATE_FILE.write_text(json.dumps(state, indent=2, ensure_ascii=False), encoding="utf-8")
-        print(f"Simulation reset: {len(state['units'])} units, {len(state['machines'])} machines")
+        print(f"Simulation reset: {len(state['units'])} units, {len(state['machines'])} machines", flush=True)
         return
 
-    state = None
+    print("============================================================", flush=True)
+    print("   VEXTHUB - SIMULADOR DE TELEMETRIA EM TEMPO REAL", flush=True)
+    print("   Monitoramento Contínuo de Parque & Dispositivos", flush=True)
+    print("============================================================", flush=True)
+    print("[*] Carregando topologia e parque de máquinas...", flush=True)
+
+    state = load_state()
+    total_units = len(state.get("units", []))
+    total_machines = len(state.get("machines", []))
+    print(
+        f"[OK] Parque carregado: {total_units} unidades ativas | "
+        f"{total_machines} máquinas monitoradas.",
+        flush=True,
+    )
+    print(
+        f"[*] Iniciando streaming contínuo ({args.ticks} pulsos programados)...",
+        flush=True,
+    )
+    print("-" * 60, flush=True)
+
     for tick in range(1, max(2, args.ticks + 1)):
-        state = update_simulation()
-        if tick % 10 == 0 or args.ticks < 20:
-            print(
-                f"[TICK {tick}] Telemetria atualizada: "
-                f"{len(state.get('units', []))} unidades, "
-                f"{len(state.get('machines', []))} maquinas, "
-                f"{len(state.get('events', []))} eventos na fila"
-            )
+        state = update_simulation(state)
+        now_str = datetime.now().strftime("%H:%M:%S")
+        events_count = len(state.get("events", []))
+
+        print(
+            f"[{now_str}] [PULSO #{tick:04d}] Telemetria ativa: "
+            f"{total_units} unidades | "
+            f"{total_machines} endpoints sincronizados | "
+            f"{events_count} eventos em buffer",
+            flush=True,
+        )
+
         if args.ticks > 1:
-            time.sleep(0.2)
+            time.sleep(1.0)
 
 
 if __name__ == "__main__":

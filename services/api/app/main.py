@@ -68,6 +68,16 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type", "X-Tenant-Id", "X-VextHub-Signature"],
 )
 
+@app.get("/", tags=["Root"])
+async def root():
+    return {
+        "service": "VextHub Tactical API",
+        "version": "4.0.0",
+        "status": "healthy",
+        "mode": "standalone" if getattr(app.state, "is_mock", True) else "connected",
+        "docs": "/docs",
+    }
+
 app.include_router(health.router)
 app.include_router(jobs.router)
 app.include_router(plugins.router)

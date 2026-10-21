@@ -44,7 +44,7 @@ export function MachineTable({
   const [selectedMachine, setSelectedMachine] = useState<Machine | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
   const machinesPerPage = 50
-  const supabase = createClient()
+  const supabase = React.useMemo(() => createClient(), [])
   const onDataLoadedRef = React.useRef(onDataLoaded)
 
   useEffect(() => {
@@ -57,6 +57,8 @@ export function MachineTable({
   }, [search])
 
   useEffect(() => {
+    let isMounted = true
+
     const fetchMachines = async () => {
       try {
         const url = unitFilter 
@@ -65,20 +67,25 @@ export function MachineTable({
         const response = await fetch(url)
         if (response.ok) {
           const data = await response.json()
+          if (!isMounted) return
           // Map simulation fields to component expectations
-          const mapped = data.map((m: any) => ({
+          interface RawInventoryMachine {
+            telemetry?: { cpu?: number; ram?: number; disk?: number };
+            agent_version?: string;
+            [key: string]: unknown;
+          }
+          const mapped = data.map((m: RawInventoryMachine) => ({
             ...m,
             cpu_info: m.telemetry ? `${m.telemetry.cpu}% CPU` : 'N/A',
             ram_total: m.telemetry ? `${m.telemetry.ram}% RAM` : 'N/A',
             agent_version: m.agent_version || 'v4.0.0-sim'
-          }))
+          })) as Machine[]
           setMachines(mapped)
           onDataLoadedRef.current?.(mapped)
         } else {
            // Only attempt supabase if simulation API fails AND we're not in a strict local-sim mode
            // This prevents ERR_CONNECTION_REFUSED noise when running purely from local files
            if (process.env.NEXT_PUBLIC_SIMULATION_MODE === 'true') {
-             console.log('Skipping Supabase fallback in simulation mode');
              return;
            }
 
@@ -86,21 +93,29 @@ export function MachineTable({
             .from('machines')
             .select('*')
             .order('last_pulse', { ascending: false })
+          if (!isMounted) return
           if (!error && data) {
-            setMachines(data)
-            onDataLoadedRef.current?.(data)
+            setMachines(data as unknown as Machine[])
+            onDataLoadedRef.current?.(data as unknown as Machine[])
           }
         }
       } catch (e) {
-        console.error('Error fetching machines:', e)
+        if (isMounted) {
+          console.error('Error fetching machines:', e)
+        }
       } finally {
-        setLoading(false)
+        if (isMounted) {
+          setLoading(false)
+        }
       }
     }
 
     fetchMachines()
     const interval = setInterval(fetchMachines, 15000)
-    return () => clearInterval(interval)
+    return () => {
+      isMounted = false
+      clearInterval(interval)
+    }
   }, [supabase, unitFilter])
 
   if (loading) return (

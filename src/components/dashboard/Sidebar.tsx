@@ -51,16 +51,20 @@ export function Sidebar() {
   const [companyName, setCompanyName] = React.useState('')
 
   React.useEffect(() => {
+    let isMounted = true
     async function fetchConfig() {
       try {
         const res = await fetch('/api/config')
         const data = await res.json()
-        if (data.company_name) setCompanyName(data.company_name)
+        if (isMounted && data.company_name) setCompanyName(data.company_name)
       } catch (err) {
         console.error('Sidebar config fetch error:', err)
       }
     }
     fetchConfig()
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   const handleLogout = async () => {
