@@ -11,7 +11,7 @@
 
 ## Sumário Executivo
 
-O **VextHub** é uma plataforma corporativa unificada de segurança defensiva, gerenciamento de postura de endpoints e governança de conformidade (GRC), projetada para combinar visibilidade de inventário em tempo real, detecção heurística de ameaças alinhada ao framework MITRE ATT&CK, cálculo estatístico de anomalias operacionais, triagem assistida por Inteligência Artificial (LLMs), canal seguro de comando e controle defensivo (C2) para agentes locais Windows e, a partir do **Sprint de Evolução Enterprise (Wiz + Cloudflare + Clavis + TIVIT)**, motores de gestão de vulnerabilidades (TVM), correlação de caminhos de ataque (TDR / Toxic Combinations), avaliação contínua de postura Zero Trust (ZTNA), radar de Shadow IT e túneis reversos com feed para firewalls, orquestração de resposta a incidentes (IR Fast-Track) com cálculo de raio de propagação (Blast Radius) e mapeamento regulatório estrito (ISO 27001, LGPD e CIS Controls v8).
+O **VextHub** é uma plataforma corporativa unificada de segurança defensiva, gerenciamento de postura de endpoints e governança de conformidade (GRC), projetada para combinar visibilidade de inventário em tempo real, detecção heurística de ameaças alinhada ao framework MITRE ATT&CK, cálculo estatístico de anomalias operacionais, triagem assistida por Inteligência Artificial (LLMs), canal seguro de comando e controle defensivo (C2) para agentes locais Windows e, a partir do **Sprint de Evolução Enterprise**, motores de gestão de vulnerabilidades (TVM), correlação de caminhos de ataque (TDR / Toxic Combinations), avaliação contínua de postura Zero Trust (ZTNA), radar de Shadow IT e túneis reversos com feed para firewalls, orquestração de resposta a incidentes (IR Fast-Track) com cálculo de raio de propagação (Blast Radius) e mapeamento regulatório estrito (ISO 27001, LGPD e CIS Controls v8).
 
 O presente documento consolida uma auditoria técnica profunda, holística e cirúrgica realizada em todas as cinco camadas constitutivas do ecossistema VextHub:
 1. **Frontend Web & API Gateway:** Next.js 16 (App Router, Turbopack, React 19, Tailwind CSS v4, TanStack Query, 35 rotas dinâmicas e estáticas).
@@ -293,11 +293,11 @@ O esquema do banco de dados relacional foi inspecionado em `infra/supabase/vexth
 
 ---
 
-### 2.6. Detalhamento da Evolução Enterprise: TVM, TDR, Zero Trust, IR Fast-Track e GRC (Wiz + Cloudflare + Clavis + TIVIT)
+### 2.6. Detalhamento da Evolução Enterprise: TVM, TDR, Zero Trust, IR Fast-Track e Governança GRC
 
 Para atender a demandas corporativas de grande escala e elevar o VextHub de uma ferramenta de visibilidade de endpoints para uma plataforma de cibersegurança e governança integrada, o **Sprint de Evolução Enterprise** implementou quatro pilares analíticos de alto impacto operacional:
 
-#### 1. TVM — Gestão Contínua de Vulnerabilidades & CISA KEV (Wiz & ISO 27001 A.8.8)
+#### 1. TVM — Gestão Contínua de Vulnerabilidades & CISA KEV (ISO 27001 A.8.8)
 - **Módulo Principal:** `src/utils/security/cve-scanner.ts` (450 linhas, tipagem estrita).
 - **Comparador Semver Zero-Dependency:** Implementação determinística de comparação e ordenação semântica de versões (`semverSatisfies`, `compareVersions`, `parseVersion`) sem bibliotecas de terceiros:
   * *Higienização de Sufixos de Arquitetura:* Normalização prévia de cadeias contendo bitness e parênteses (`(64-bit)`, `(32-bit)`, `(x64)`, `(x86)`, `(arm64)`), impedindo que sufixos sejam concatenados indevidamente aos dígitos de versão (`"6.22 (64-bit)"` é interpretado estritamente como `[6, 22]`).
@@ -308,7 +308,7 @@ Para atender a demandas corporativas de grande escala e elevar o VextHub de uma 
 - **Priorização CISA KEV:** Identificação explícita de vulnerabilidades com exploração ativa documentada no catálogo *Known Exploited Vulnerabilities* da CISA, com pontuação CVSS v3, vetores de ataque e recomendações acionáveis de patch.
 - **Integração na Interface:** Conectado a `src/utils/security/telemetry-detection.ts` e à aba `'vrecon'` de `src/components/dashboard/DeviceDetails.tsx`, exibindo badges de severidade, tags CISA KEV e ações de remediação recomendadas.
 
-#### 2. TDR — Toxic Combinations & Motor de Correlação de Caminhos de Ataque (Wiz TDR & Clavis SIEM)
+#### 2. TDR — Toxic Combinations & Motor de Correlação de Caminhos de Ataque
 - **Módulo Principal:** `src/utils/security/telemetry-detection.ts` (linhas 520-740).
 - **Conceito de Toxic Combinations:** Na segurança moderna, sinais isolados de baixa ou média severidade (uma porta em escuta, um software desatualizado, um processo em diretório temporário) frequentemente não constituem um incidente grave por si só. No entanto, quando esses sinais coexistem na mesma máquina, formam um **Caminho de Ataque Crítico**:
   * *1. Remote Breach Path:* Correlação simultânea de (a) CVE Crítica com exploit ou Ferramenta de Acesso Remoto Não Autorizada (RustDesk, UltraViewer, AnyDesk) + (b) Porta de Escuta Sensível (3389 RDP, 445 SMB, 5900 VNC, 22 SSH) + (c) Conexão TCP Externa Ativa Estabelecida.
@@ -316,7 +316,7 @@ Para atender a demandas corporativas de grande escala e elevar o VextHub de uma 
   * *3. Lateral Movement / Credential Exfiltration Path:* Correlação de (a) Indicador de ferramenta de credenciais (Mimikatz, extração de LSASS, `sekurlsa`) + (b) Sessão SMB ou RDP externa ativa + (c) Anomalia Estatística Multivariada comprovada com desvio populacional $|Z| \ge 2.5$ em consumo de disco ou rede.
 - **Elevação Dinâmica de Criticidade:** Incidentes com caminhos de ataque correlacionados recebem automaticamente severidade máxima (`CRITICAL`), pontuação de risco entre 95 e 100, ordenação no topo da lista de achados e vinculação aos estágios táticos do MITRE ATT&CK Kill-Chain (*Initial Access*, *Persistence*, *Defense Evasion*, *Lateral Movement*, *Exfiltration*).
 
-#### 3. ZTNA — Avaliação Contínua de Postura & Radar de Shadow IT (Cloudflare Zero Trust & Cloudflare One)
+#### 3. ZTNA — Avaliação Contínua de Postura & Radar de Shadow IT
 - **Módulos Principais:** `src/utils/security/zerotrust-posture.ts` (360 linhas) e `src/app/api/security/zerotrust-feed/route.ts`.
 - **Motor de Postura Zero Trust:** Avalia cinco fatores ponderados em tempo real (`tunnel_radar`, `cve_vulnerabilities`, `network_exposure`, `active_threats`, `endpoint_hygiene`), computando um score contínuo de 0 a 100 e emitindo um veredito determinístico:
   * *`TRUSTED`:* Score $\ge 80$, zero túneis reversos, zero CVEs ativas no CISA KEV e postura de rede em conformidade.
@@ -332,7 +332,7 @@ Para atender a demandas corporativas de grande escala e elevar o VextHub de uma 
     4. `mikrotik`: Script de comandos CLI RouterOS (`/ip firewall address-list add list=VEXTHUB_QUARANTINE address=...`).
     5. `iptables`: Script shell automatizado com criação de `ipset` (`vext_quarantine`) e regra de bloqueio `DROP`.
 
-#### 4. IR Fast-Track, Blast Radius & Governança GRC (TIVIT Defense/Sensr & Clavis GRC)
+#### 4. IR Fast-Track, Blast Radius & Governança GRC
 - **Módulos Principais:** `src/utils/security/incident-lifecycle.ts` (485 linhas), `src/app/dashboard/security/page.tsx` e `src/utils/export/reports.ts`.
 - **Workflow de Resposta a Incidentes (IR Fast-Track):**
   * Esteira formal de quatro estágios: `TRIAGE` (triagem inicial) $\rightarrow$ `CONTAINMENT` (isolamento de rede / bloqueio de tráfego) $\rightarrow$ `ERADICATION` (remoção do artefato e saneamento) $\rightarrow$ `RECOVERED` (restauração de integridade e encerramento auditado).
@@ -652,7 +652,7 @@ Para guiar a evolução do VextHub com previsibilidade, qualidade técnica e seg
          │    ├── [SEC-04] Delimitação Semântica contra Indirect Prompt Injection na IA (<untrusted_...>)
          │    └── [SYS-01] Diagnóstico de Saúde de Infraestrutura em Tempo Real (/api/system/status)
          │
-         └─── FASE 3: Evolução Enterprise (Wiz + Cloudflare + Clavis + TIVIT) [✅ CONCLUÍDA]
+         └─── FASE 3: Evolução Enterprise (TVM + TDR + ZTNA + GRC) [✅ CONCLUÍDA]
               ├── [R1] TVM: Scanner Semver de Vulnerabilidades & Priorização CISA KEV (cve-scanner.ts)
               ├── [R2] TDR: Toxic Combinations & Correlação de Caminhos de Ataque (telemetry-detection.ts)
               ├── [R3] ZTNA: Postura Zero Trust, Radar Shadow IT/Túneis & Feed Firewalls (zerotrust-posture.ts)
@@ -727,7 +727,7 @@ Para guiar a evolução do VextHub com previsibilidade, qualidade técnica e seg
 
 ---
 
-### 4.3. Fase 3: Evolução Enterprise — TVM, TDR, ZTNA, IR Fast-Track e Governança GRC (Wiz + Cloudflare + Clavis + TIVIT)
+### 4.3. Fase 3: Evolução Enterprise — TVM, TDR, ZTNA, IR Fast-Track e Governança GRC
 
 **Objetivo Estratégico:** Transformar o VextHub em uma plataforma unificada de padrão corporativo, integrando gestão contínua de vulnerabilidades, correlação de caminhos de ataque de alto risco, postura contínua Zero Trust, radar de evasão de perímetro com feeds para firewalls, orquestração de resposta a incidentes com cálculo de Blast Radius e conformidade com marcos regulatórios (ISO 27001, LGPD e CIS Controls v8).
 

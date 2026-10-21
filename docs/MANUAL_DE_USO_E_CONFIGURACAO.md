@@ -26,7 +26,7 @@ Este manual fornece o guia passo a passo definitivo para instalação, configura
 ## 1. Filosofia do Sistema e Arquitetura Autônoma
 
 O VextHub foi concebido sob a premissa fundamental de **Custo Zero e Dependência Zero de Sistemas Proprietários Pagos**:
-- **Sem assinaturas comerciais**: Você não precisa pagar serviços caros de TVM (como Wiz ou Tenable) ou plataformas proprietárias de Zero Trust (como Cloudflare corporativo pago).
+- **Sem assinaturas comerciais**: Você não precisa pagar por licenças recorrentes ou plataformas corporativas proprietárias.
 - **Sem consumo de APIs pagas por consulta**: Os comparadores de versões de software, as regras de caminhos de ataque, os cálculos de postura e o catálogo de vulnerabilidades funcionam **100% no servidor local**.
 - **Independência de Nuvem Externa**: A plataforma pode rodar totalmente em rede local (*on-premises*), em um servidor próprio ou em qualquer VPS de baixo custo.
 

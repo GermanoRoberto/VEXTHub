@@ -15,13 +15,13 @@ Projetada com a filosofia de **Custo Zero e Dependência Zero de Ferramentas Pag
 
 ## 🎯 Principais Capacidades da Plataforma
 
-### 1. Gestão de Vulnerabilidades & CISA KEV (Estilo Wiz TVM)
+### 1. Gestão Contínua de Vulnerabilidades & CISA KEV (TVM)
 - **Comparador Semântico Puro**: Analisa as versões de softwares instalados nas máquinas clientes contra faixas de vulnerabilidade sem depender de APIs externas.
 - **Catálogo de CVEs Críticas**: Base curada de vulnerabilidades de alto impacto em softwares corporativos (OpenSSH, WinRAR, 7-Zip, AnyDesk, PuTTY, Chrome, Zoom, FortiClient, etc.).
 - **Priorização por Exploração Ativa (CISA KEV)**: Alerta imediato sobre falhas com exploração comprovada em ambiente selvagem (*in-the-wild*).
 - **Escore CVSS v3 & Remediação**: Cálculo de impacto e recomendações acionáveis para o time de suporte/TI.
 
-### 2. Detecção de Ameaças & Combinações Tóxicas (Estilo Wiz TDR / Clavis SIEM)
+### 2. Detecção de Ameaças & Combinações Tóxicas (TDR)
 - **Correlação Multi-Sinal**: Cruza vulnerabilidades, portas em escuta, processos em execução e conexões externas no mesmo host.
 - **Detecção de Caminhos de Ataque**:
   - *Remote Breach Path*: CVE crítica ou RAT não autorizado + porta sensível (3389, 445, 5900, 22) + conexão externa ativa.
@@ -29,7 +29,7 @@ Projetada com a filosofia de **Custo Zero e Dependência Zero de Ferramentas Pag
   - *Lateral Movement / Exfiltration Path*: Indicadores de dump de credenciais (LSASS) + sessões SMB/RDP ativas + desvio estatístico populacional (Z-Score $\ge 2.5$).
 - **Mapeamento MITRE ATT&CK**: Classificação visual por estágios de Kill-Chain.
 
-### 3. Postura Zero Trust & Radar de Shadow IT (Estilo Cloudflare One)
+### 3. Postura Zero Trust & Radar de Shadow IT (ZTNA)
 - **Avaliação Contínua de Postura**: Veredito instantâneo para cada máquina da frota:
   - `TRUSTED` (Conforme e protegida)
   - `RESTRICTED` (Alerta moderado ou atualização pendente)
@@ -37,7 +37,7 @@ Projetada com a filosofia de **Custo Zero e Dependência Zero de Ferramentas Pag
 - **Radar de Túneis Reversos**: Detecta utilitários de evasão e bypass de perímetro (`ngrok`, `cloudflared`, `tailscale`, `zerotier`, `chisel`, `tor`, `plink`, VPNs comerciais não autorizadas e portas C2 como 4444, 1337, 3333, 8443).
 - **Feed para Firewalls Corporativos**: Rota protegida `/api/security/zerotrust-feed` que gera listas de quarentena em tempo real compatíveis com **pfSense, FortiGate, MikroTik e Linux iptables**.
 
-### 4. Fast-Track de Incidentes, Raio de Explosão & GRC (Estilo TIVIT & Clavis GRC)
+### 4. Fast-Track de Incidentes, Raio de Explosão & Governança GRC
 - **Ciclo de Resposta a Incidentes**: Pipeline estruturado de 4 estágios (`TRIAGE` $\rightarrow$ `CONTAINMENT` $\rightarrow$ `ERADICATION` $\rightarrow$ `RECOVERED`).
 - **Controle de SLA por Severidade**: Prazos automáticos de contenção (Crítico: 1h, Alto: 4h, Médio: 24h, Baixo: 72h).
 - **Cálculo de Raio de Explosão (*Blast Radius*)**: Algoritmo $O(N)$ que identifica instantaneamente todos os demais computadores da frota que compartilham a mesma versão vulnerável ou porta exposta.
