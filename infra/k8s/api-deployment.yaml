@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vexthub-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: vexthub-api
+  template:
+    metadata:
+      labels:
+        app: vexthub-api
+    spec:
+      containers:
+        - name: api
+          image: vexthub/api:latest
+          ports:
+            - containerPort: 8000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+          envFrom:
+            - secretRef:
+                name: vexthub-api-secrets

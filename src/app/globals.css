@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-muted: #94A3B8;
+  --color-muted-foreground: #64748B;
+  
+  --font-sans: "Manrope", "Inter", sans-serif;
+  --animate-spin-slow: spin 3s linear infinite;
+  
+  --color-apex-primary: #7C3AED;
+  --color-apex-secondary: #A3E635;
+  --color-apex-dark: #1A1C23;
+  --color-apex-card: #23262F;
+  --color-apex-muted: #94A3B8;
+  --color-apex-danger: #FF4D4D;
+  --color-apex-warning: #FACC15;
+  
+  --radius-apex: 4px;
+}
+
+:root {
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+  --card: #FFFFFF;
+  --card-foreground: #0F172A;
+  --primary: #7C3AED;
+  --primary-foreground: #FFFFFF;
+  --secondary: #A3E635;
+  --accent: #A3E635;
+  --border: rgba(0, 0, 0, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+  --radius-tactical: 12px;
+}
+
+.dark {
+  --background: #0B0C10; /* Ultra Dark Deep Blue/Black */
+  --foreground: #F1F5F9;
+  --card: #161B22;
+  --card-foreground: #F1F5F9;
+  --primary: #8B5CF6;
+  --primary-foreground: #FFFFFF;
+  --secondary: #D9F99D;
+  --accent: #D9F99D;
+  --border: rgba(255, 255, 255, 0.06);
+  --glass-bg: rgba(22, 27, 34, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+@layer components {
+  .glass-card {
+    @apply backdrop-blur-xl border transition-all duration-300;
+    background: var(--glass-bg);
+    border-color: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+  
+  .glass-card-hover {
+    @apply hover:scale-[1.01] hover:shadow-2xl transition-all duration-300;
+    border-color: rgba(var(--color-primary), 0.2);
+  }
+
+  .apex-card {
+    @apply backdrop-blur-xl border rounded-[--radius-tactical] p-6 transition-all duration-300;
+    background: var(--glass-bg);
+    border-color: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+  
+  .apex-card-hover {
+    @apply hover:border-primary/30 transition-all duration-300 cursor-default;
+  }
+
+  .apex-button-primary {
+    @apply bg-primary/90 backdrop-blur-md hover:bg-primary text-white px-6 py-2.5 rounded-[--radius-tactical] font-bold transition-all duration-300 active:scale-95 border border-white/20 shadow-lg shadow-primary/20;
+  }
+
+  .apex-button-secondary {
+    @apply backdrop-blur-xl border text-foreground/80 hover:text-foreground px-6 py-2.5 rounded-[--radius-tactical] font-bold transition-all duration-300 border-foreground/10;
+    background: var(--glass-bg);
+    border-color: var(--glass-border);
+  }
+
+  .apex-input {
+    @apply backdrop-blur-xl border bg-foreground/[0.03] rounded-[--radius-tactical] px-4 py-2.5 text-sm outline-none focus:border-primary/50 focus:bg-foreground/[0.05] transition-all placeholder:text-foreground/30;
+    background: var(--glass-bg);
+    border-color: var(--glass-border);
+  }
+
+  .text-apex-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-primary via-primary to-secondary;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(124, 58, 237, 0.03) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(163, 230, 53, 0.03) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-foreground/10 rounded-full hover:bg-foreground/20 transition-colors;
+}
+

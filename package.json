@@ -1,0 +1,60 @@
+{
+  "name": "vexthub",
+  "version": "4.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack",
+    "dev:all": "start powershell -NoExit -Command \"npm run api:dev\" & next dev --webpack",
+    "build": "next build --webpack",
+    "start": "next start",
+    "lint": "eslint",
+    "api:dev": "python -m uvicorn app.main:app --reload --app-dir services/api",
+    "worker:dev": "python -m app.workers.runner",
+    "sim:seed": "python scripts/telemetry_simulator.py --reset",
+    "sim:tick": "python scripts/telemetry_simulator.py",
+    "sim:profile": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/capture_local_profile.ps1",
+    "sim:agent-install": "python scripts/agent_install_scenario.py --delay 120",
+    "sim:agent-install:fast": "python scripts/agent_install_scenario.py --delay 5",
+    "sim:agent-install:classification": "python scripts/agent_install_scenario.py --delay 5 --signed-installer",
+    "stress:telemetry": "python scripts/telemetry_stress.py --scenario chaos --duration 30 --rps 25 --concurrency 64 --machines 500"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.10.2",
+    "@supabase/supabase-js": "^2.103.3",
+    "@tailwindcss/postcss": "^4",
+    "@tanstack/react-query": "^5.100.10",
+    "@types/leaflet": "^1.9.21",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "chart.js": "^4.5.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.38.0",
+    "html-to-image": "^1.11.13",
+    "html2canvas": "^1.4.1",
+    "ioredis": "^5.10.1",
+    "jspdf": "^4.2.1",
+    "jszip": "^3.10.1",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^1.8.0",
+    "next": "16.2.4",
+    "next-themes": "^0.4.6",
+    "react": "19.2.4",
+    "react-chartjs-2": "^5.3.1",
+    "react-dom": "19.2.4",
+    "react-leaflet": "^5.0.0",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss": "^4",
+    "tesseract.js": "^7.0.0",
+    "typescript": "^5"
+  },
+  "devDependencies": {
+    "eslint": "^9",
+    "eslint-config-next": "16.2.4"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "8.5.10"
+    }
+  }
+}

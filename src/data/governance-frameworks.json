@@ -1,0 +1,129 @@
+{
+  "source": {
+    "label": "Frameworks de Governança de TI · Guia Interativo",
+    "url": "https://wandersontech83.github.io/frameworks-gov-ti/",
+    "usage": "curated_operational_summary"
+  },
+  "frameworks": [
+    {
+      "id": "nist-csf",
+      "name": "NIST CSF",
+      "category": "seguranca",
+      "primary_focus": ["identify", "protect", "detect", "respond", "recover"],
+      "finding_categories": ["remote_access", "persistence", "execution", "malware_indicator", "network_exposure", "policy"],
+      "evidence_signals": ["asset_inventory", "network_connections", "security_alerts", "incident_timeline", "response_actions"],
+      "audit_evidence": ["inventario de ativos", "eventos detectados", "acoes de resposta", "validacao pos-incidente"],
+      "prompt_guidance": "Use para transformar alertas tecnicos em ciclo de resposta: identificar ativo, proteger acesso, detectar anomalia, responder e recuperar."
+    },
+    {
+      "id": "iso-27001",
+      "name": "ISO/IEC 27001",
+      "category": "seguranca",
+      "primary_focus": ["sgsi", "risk_treatment", "access_control", "incident_management", "continuous_improvement"],
+      "finding_categories": ["remote_access", "persistence", "execution", "malware_indicator", "network_exposure", "policy"],
+      "evidence_signals": ["risk_register", "access_review", "asset_inventory", "incident_record", "corrective_action"],
+      "audit_evidence": ["escopo do SGSI", "risco e tratamento", "controles aplicaveis", "registro de incidente", "acao corretiva"],
+      "prompt_guidance": "Use quando a IA precisar falar em risco, controle, evidencia de auditoria, nao conformidade e plano de tratamento."
+    },
+    {
+      "id": "iso-27002",
+      "name": "ISO/IEC 27002",
+      "category": "seguranca",
+      "primary_focus": ["security_controls", "organizational_controls", "people_controls", "physical_controls", "technology_controls"],
+      "finding_categories": ["remote_access", "persistence", "execution", "malware_indicator", "network_exposure", "policy"],
+      "evidence_signals": ["control_mapping", "technical_control_status", "logging", "malware_protection", "access_control"],
+      "audit_evidence": ["controle afetado", "estado do controle", "evidencia tecnica", "responsavel", "reteste"],
+      "prompt_guidance": "Use para sugerir controles praticos e evidencias esperadas sem inventar certificacao ou aderencia total."
+    },
+    {
+      "id": "cis-controls",
+      "name": "CIS Controls",
+      "category": "seguranca",
+      "primary_focus": ["basic_cyber_hygiene", "asset_inventory", "vulnerability_management", "secure_configuration", "logging"],
+      "finding_categories": ["remote_access", "persistence", "execution", "malware_indicator", "network_exposure", "policy"],
+      "evidence_signals": ["software_inventory", "hardware_inventory", "secure_configuration", "log_review", "vulnerability_scan"],
+      "audit_evidence": ["inventario de hardware", "inventario de software", "configuracao segura", "logs revisados", "excecoes aprovadas"],
+      "prompt_guidance": "Use para priorizar higiene basica e acoes objetivas em endpoints: inventario, configuracao, vulnerabilidades e logs."
+    },
+    {
+      "id": "cobit-2019",
+      "name": "COBIT 2019",
+      "category": "governanca",
+      "primary_focus": ["governance_objectives", "management_objectives", "risk_alignment", "value_delivery"],
+      "finding_categories": ["policy", "remote_access", "network_exposure", "persistence"],
+      "evidence_signals": ["governance_objective", "owner", "risk_decision", "policy_exception", "management_action"],
+      "audit_evidence": ["objetivo de governanca", "dono do risco", "decisao aprovada", "excecao documentada", "status da acao"],
+      "prompt_guidance": "Use para elevar uma observacao tecnica para governanca: dono, risco, decisao, excecao e acompanhamento executivo."
+    },
+    {
+      "id": "itil-4",
+      "name": "ITIL 4",
+      "category": "servicos",
+      "primary_focus": ["incident_management", "problem_management", "change_enablement", "service_value"],
+      "finding_categories": ["remote_access", "persistence", "execution", "policy"],
+      "evidence_signals": ["incident_ticket", "change_record", "service_owner", "known_error", "closure_validation"],
+      "audit_evidence": ["ticket de incidente", "mudanca vinculada", "dono do servico", "causa raiz", "validacao de encerramento"],
+      "prompt_guidance": "Use para orientar processo operacional: registrar incidente, vincular mudanca, investigar causa raiz e validar encerramento."
+    },
+    {
+      "id": "iso-20000",
+      "name": "ISO/IEC 20000",
+      "category": "servicos",
+      "primary_focus": ["service_management", "sla", "incident_process", "change_control", "continual_improvement"],
+      "finding_categories": ["policy", "remote_access", "execution", "network_exposure"],
+      "evidence_signals": ["service_catalog", "sla_impact", "incident_record", "change_record", "service_report"],
+      "audit_evidence": ["servico afetado", "impacto em SLA", "registro de incidente", "mudanca controlada", "relatorio de servico"],
+      "prompt_guidance": "Use quando o alerta precisa virar gestao de servico, SLA, incidente formal ou melhoria continua."
+    },
+    {
+      "id": "lgpd",
+      "name": "LGPD",
+      "category": "privacidade",
+      "primary_focus": ["personal_data", "legal_basis", "data_security", "incident_notification", "accountability"],
+      "finding_categories": ["remote_access", "malware_indicator", "network_exposure", "policy"],
+      "evidence_signals": ["personal_data_exposure", "affected_system", "access_log", "incident_scope", "notification_assessment"],
+      "audit_evidence": ["sistema com dados pessoais", "escopo do incidente", "logs de acesso", "avaliacao de notificacao", "medidas adotadas"],
+      "prompt_guidance": "Use somente quando houver indicio de dados pessoais, acesso indevido ou risco de vazamento; peça evidencia antes de afirmar incidente LGPD."
+    },
+    {
+      "id": "itam",
+      "name": "ITAM / ISO 19770",
+      "category": "ativos",
+      "primary_focus": ["hardware_assets", "software_assets", "license_compliance", "asset_lifecycle", "cloud_assets"],
+      "finding_categories": ["policy", "remote_access", "execution"],
+      "evidence_signals": ["software_inventory", "hardware_inventory", "license_status", "owner", "asset_lifecycle_state"],
+      "audit_evidence": ["ativo identificado", "software instalado", "licenca ou aprovacao", "responsavel", "estado do ciclo de vida"],
+      "prompt_guidance": "Use para transformar software detectado em controle de ativo: quem e dono, esta aprovado, esta licenciado e deve permanecer instalado."
+    },
+    {
+      "id": "iso-42001",
+      "name": "ISO/IEC 42001",
+      "category": "ia",
+      "primary_focus": ["ai_management_system", "ai_risk", "transparency", "human_oversight", "governance"],
+      "finding_categories": ["policy"],
+      "evidence_signals": ["ai_provider", "model_usage", "human_review", "risk_assessment", "output_logging"],
+      "audit_evidence": ["uso de IA declarado", "avaliacao de risco", "revisao humana", "logs de resposta", "limites de uso"],
+      "prompt_guidance": "Use para governar respostas de IA: transparencia, revisao humana, limites, registro e nao invencao de fatos."
+    },
+    {
+      "id": "owasp",
+      "name": "OWASP",
+      "category": "aplicacoes",
+      "primary_focus": ["application_security", "secure_development", "web_risk", "api_security"],
+      "finding_categories": ["network_exposure", "execution", "policy"],
+      "evidence_signals": ["exposed_service", "api_endpoint", "authentication_control", "vulnerability_evidence", "secure_config"],
+      "audit_evidence": ["servico exposto", "controle de autenticacao", "evidencia de vulnerabilidade", "configuracao segura", "correcao validada"],
+      "prompt_guidance": "Use quando a telemetria aponta exposicao de servico, API, aplicacao web ou configuracao insegura."
+    },
+    {
+      "id": "finops",
+      "name": "FinOps",
+      "category": "financeiro",
+      "primary_focus": ["cloud_cost_visibility", "cost_allocation", "rightsizing", "budget_alerts"],
+      "finding_categories": ["policy"],
+      "evidence_signals": ["cloud_asset", "tagging", "owner", "usage_pattern", "cost_anomaly"],
+      "audit_evidence": ["recurso cloud", "tag de custo", "responsavel", "padrao de uso", "anomalia de gasto"],
+      "prompt_guidance": "Use para custos cloud, alocacao e anomalia financeira; nao misture com incidente de seguranca sem evidencia."
+    }
+  ]
+}
