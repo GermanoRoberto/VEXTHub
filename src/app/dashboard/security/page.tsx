@@ -116,13 +116,13 @@ function slaClass(status: SlaStatus): string {
 function stageLabel(stage: IncidentStatus): string {
   switch (stage) {
     case "TRIAGE":
-      return "Triagem (Triage)"
+      return "Triagem"
     case "CONTAINMENT":
-      return "Contenção (Containment)"
+      return "Contenção"
     case "ERADICATION":
-      return "Erradicação (Eradication)"
+      return "Erradicação"
     case "RECOVERED":
-      return "Recuperado (Recovered)"
+      return "Recuperado"
   }
 }
 
@@ -220,7 +220,7 @@ export default function SecurityPage() {
               id: "sec-tunnel-cloudflared",
               hostname: realEndpoints[1]?.hostname || "PC-FINANCEIRO-04",
               unit: realEndpoints[1]?.unit || "Filial Sul",
-              software_name: "Shadow IT / Reverse Tunnel cloudflared",
+              software_name: "Túnel Reverso Não Homologado (cloudflared)",
               message: "Detecção de processo de túnel reverso não homologado contornando perímetro de firewall.",
               severity: "high",
               created_at: new Date(Date.now() - 40 * 60 * 1000).toISOString(),
@@ -344,7 +344,7 @@ export default function SecurityPage() {
             value: `${incidentMetrics.mttd_minutes}m / ${incidentMetrics.mttr_minutes}m`,
             icon: Clock,
             color: "text-purple-400",
-            tooltip: "Mean Time to Detect / Mean Time to Recover",
+            tooltip: "Tempo Médio de Detecção / Tempo Médio de Resolução",
           },
           {
             label: "SLA SOC",
@@ -375,7 +375,7 @@ export default function SecurityPage() {
               <div className="flex items-center gap-2">
                 <h2 className="text-base font-bold tracking-tight">Radar Zero Trust & Shadow IT</h2>
                 <span className="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded bg-purple-500/15 text-purple-400 border border-purple-500/25">
-                  Cloudflare One & CIS
+                  ZTNA & CIS Controls
                 </span>
               </div>
               <p className="text-xs text-foreground/50">
@@ -527,7 +527,7 @@ export default function SecurityPage() {
             <div className="flex items-center gap-2">
               <h2 className="text-lg font-bold tracking-tight">Pipeline Incident Response Fast-Track</h2>
               <span className="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded bg-sky-500/15 text-sky-400 border border-sky-500/25">
-                TIVIT Defense & Clavis GRC
+                SLA & Governança GRC
               </span>
             </div>
             <p className="text-xs text-foreground/45 mt-0.5">
@@ -559,7 +559,7 @@ export default function SecurityPage() {
                       : "text-foreground/50 hover:text-foreground"
                   }`}
                 >
-                  {stg} ({count})
+                  {stageLabel(stg)} ({count})
                 </button>
               )
             })}

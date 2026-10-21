@@ -656,7 +656,7 @@ export async function exportCompliancePdf(
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(6.5);
     doc.setTextColor(15, 23, 42);
-    doc.text('POSTURA ZERO TRUST (CLOUDFLARE ONE / CIS):', 19, currentY + 4.0);
+    doc.text('POSTURA ZERO TRUST (ZTNA / CIS CONTROLS):', 19, currentY + 4.0);
 
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(6.5);

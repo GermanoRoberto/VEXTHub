@@ -355,7 +355,7 @@ export function DeviceDetails({ machine, onClose }: DeviceDetailsProps) {
                   <span className="font-semibold text-foreground/80">{machine.inventory_data?.system_details?.active_user || 'N/A'}</span>
                 </div>
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-foreground/40">Serial Number</span>
+                  <span className="text-foreground/40">Número de Série</span>
                   <span className="font-mono">{machine.serial_number || 'UNKNOWN'}</span>
                 </div>
                 <div className="flex items-center justify-between text-xs">
@@ -537,7 +537,7 @@ export function DeviceDetails({ machine, onClose }: DeviceDetailsProps) {
                           <div className="space-y-1.5">
                             <div className="flex items-center gap-2 flex-wrap">
                               <span className="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-rose-600 text-white flex items-center gap-1 shadow-sm">
-                                <AlertTriangle className="h-3 w-3" /> ATTACK PATH CORRELACIONADO
+                                <AlertTriangle className="h-3 w-3" /> CAMINHO DE ATAQUE CORRELACIONADO
                               </span>
                               {finding.attack_path?.stage && (
                                 <span className="px-2.5 py-1 rounded-md text-[10px] font-mono font-bold bg-rose-500/15 text-rose-300 border border-rose-500/30">
@@ -562,7 +562,7 @@ export function DeviceDetails({ machine, onClose }: DeviceDetailsProps) {
                         {finding.attack_path?.kill_chain && (
                           <div className="flex items-center gap-2 p-2.5 rounded-xl bg-black/60 border border-rose-500/20 text-xs font-mono">
                             <Zap className="h-3.5 w-3.5 text-rose-400 shrink-0" />
-                            <span className="font-bold text-rose-300">Kill-Chain:</span>
+                            <span className="font-bold text-rose-300">Cadeia de Ataque:</span>
                             <span className="text-foreground/90">{finding.attack_path.kill_chain}</span>
                           </div>
                         )}
@@ -707,7 +707,7 @@ export function DeviceDetails({ machine, onClose }: DeviceDetailsProps) {
                               ? 'bg-amber-500/20 text-amber-500' 
                               : 'bg-foreground/5 text-foreground/40'
                           }`}>
-                            {port.exposure || 'LISTEN'}
+                            {port.exposure === 'LISTEN' || !port.exposure ? 'EM ESCUTA' : port.exposure}
                           </span>
                         </div>
                         <p className="text-[10px] font-mono text-foreground/40 mt-1 truncate">
@@ -738,7 +738,7 @@ export function DeviceDetails({ machine, onClose }: DeviceDetailsProps) {
                         {conn.local_address || 'local'}:{conn.local_port} &rarr; {conn.remote_address || 'remoto'}:{conn.remote_port}
                       </span>
                       <span className="text-[10px] text-foreground/40 font-bold uppercase shrink-0 ml-2">
-                        {conn.state || 'ESTABLISHED'}
+                        {conn.state === 'ESTABLISHED' || !conn.state ? 'ESTABELECIDA' : conn.state}
                       </span>
                     </div>
                   ))}
@@ -859,7 +859,7 @@ export function DeviceDetails({ machine, onClose }: DeviceDetailsProps) {
         <div className="flex items-center gap-4 text-[10px] text-foreground/20 font-bold uppercase tracking-[0.2em]">
           <span>VextHub Agent v{machine.agent_version || '4.0.0'}</span>
           <span className="h-1 w-1 rounded-full bg-foreground/10" />
-          <span>Defensive Inventory Engine</span>
+          <span>Motor de Inventário Defensivo</span>
         </div>
         <button
           onClick={handleDelete}
