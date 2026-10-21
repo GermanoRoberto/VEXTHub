@@ -2,9 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  experimental: {
-    cpus: 1,
-  },
+  allowedDevOrigins: [
+    'localhost',
+    '127.0.0.1',
+    '192.168.101.41',
+    '192.168.*',
+  ],
   async redirects() {
     return [
       {

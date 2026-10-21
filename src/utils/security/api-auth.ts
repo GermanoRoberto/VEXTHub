@@ -36,7 +36,13 @@ function getRequestedTenantId(request?: Request) {
 import { supabaseAdmin } from "@/utils/supabase/admin";
 
 export function isLocalAuthFallbackAllowed(): boolean {
-  if (process.env.VEXTHUB_LOCAL_MODE === "true") return true;
+  if (
+    process.env.VEXTHUB_LOCAL_MODE === "true" ||
+    process.env.NEXT_PUBLIC_SIMULATION_MODE === "true" ||
+    process.env.NODE_ENV !== "production"
+  ) {
+    return true;
+  }
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
   const supabaseKey = (
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||

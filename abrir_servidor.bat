@@ -50,9 +50,14 @@ if not exist node_modules (
     cmd /c npm install
 )
 
-:: 3. Instalar dependencias do Python (pip install)
-echo [INFO] Garantindo dependencias do Backend Python (FastAPI)...
-python -m pip install -r services/api/requirements.txt
+:: 3. Instalar dependencias do Python (pip install) apenas se necessario
+python -c "import fastapi, uvicorn, asyncpg, redis, httpx, pydantic_settings" >nul 2>nul
+if %errorlevel% neq 0 (
+    echo [INFO] Instalando dependencias do Backend Python (FastAPI)...
+    python -m pip install -r services/api/requirements.txt
+) else (
+    echo [INFO] Backend Python: dependencias verificadas e prontas.
+)
 
 echo.
 echo ==========================================
